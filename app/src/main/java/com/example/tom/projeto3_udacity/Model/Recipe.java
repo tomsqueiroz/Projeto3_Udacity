@@ -1,4 +1,8 @@
 package com.example.tom.projeto3_udacity.Model;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Tom on 21/04/2018.
  */
 
-public class Recipe {
+public class Recipe implements Parcelable{
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -74,4 +78,43 @@ public class Recipe {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public Recipe(Parcel in){
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.servings = in.readInt();
+        ingredients = new ArrayList<>();
+        in.readTypedList(ingredients, Ingredient.CREATOR);
+        steps = new ArrayList<>();
+        in.readTypedList(steps,Step.CREATOR);
+        this.image = in.readString();
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeInt(servings);
+        parcel.writeTypedList(ingredients);
+        parcel.writeTypedList(steps);
+        parcel.writeString(image);
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
+
+
 }
