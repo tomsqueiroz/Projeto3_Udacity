@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Projeto3_Udacity</string>
+    <string name="ingredientsDetailsLabel">Ingredients List:</string>
 </resources>

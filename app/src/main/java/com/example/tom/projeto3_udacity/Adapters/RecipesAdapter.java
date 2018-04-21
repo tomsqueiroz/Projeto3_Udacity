@@ -1,4 +1,4 @@
-package com.example.tom.projeto3_udacity;
+package com.example.tom.projeto3_udacity.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.tom.projeto3_udacity.Model.Recipe;
+import com.example.tom.projeto3_udacity.R;
 
 import java.util.List;
 

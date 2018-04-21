@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.example.tom.projeto3_udacity.Adapters.RecipesAdapter;
 import com.example.tom.projeto3_udacity.Model.Recipe;
 import com.example.tom.projeto3_udacity.NetworkUtils.RetrofitInterface;
 import com.example.tom.projeto3_udacity.NetworkUtils.RetrofitUtils;
