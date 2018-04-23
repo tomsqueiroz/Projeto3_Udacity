@@ -1,4 +1,4 @@
-package com.example.tom.projeto3_udacity;
+package com.example.tom.projeto3_udacity.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,10 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.example.tom.projeto3_udacity.Activities.DetailsActivity;
 import com.example.tom.projeto3_udacity.Adapters.RecipesAdapter;
 import com.example.tom.projeto3_udacity.Model.Recipe;
 import com.example.tom.projeto3_udacity.NetworkUtils.RetrofitInterface;
 import com.example.tom.projeto3_udacity.NetworkUtils.RetrofitUtils;
+import com.example.tom.projeto3_udacity.R;
 
 import java.util.List;
 
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.Re
             }
         });
     }
+
+
 
     @Override
     public void onClick(Recipe recipe) {
