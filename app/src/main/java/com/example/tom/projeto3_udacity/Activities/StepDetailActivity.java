@@ -9,8 +9,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.tom.projeto3_udacity.Model.Recipe;
 import com.example.tom.projeto3_udacity.Model.Step;
 import com.example.tom.projeto3_udacity.R;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -31,6 +34,8 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.List;
+
 /**
  * Created by Tom on 22/04/2018.
  */
@@ -41,6 +46,13 @@ public class StepDetailActivity extends AppCompatActivity{
     private SimpleExoPlayer mExoPlayer;
     private SimpleExoPlayerView mPlayerView;
     private TextView mDescriptionText;
+    private ImageButton mNextStepButton;
+    private ImageButton mPreviousStepButton;
+    private List<Step> stepList;
+    private Step step;
+    private int position;
+    private Recipe recipe;
+
 
 
     @Override
@@ -48,21 +60,38 @@ public class StepDetailActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_detail);
 
-        mPlayerView = (SimpleExoPlayerView) findViewById(R.id.playerView);
-        mDescriptionText = (TextView) findViewById(R.id.tv_step_detail);
-
-
+        mPlayerView = findViewById(R.id.playerView);
+        mDescriptionText = findViewById(R.id.tv_step_detail);
+        mNextStepButton =  findViewById(R.id.next_step);
+        mPreviousStepButton = findViewById(R.id.previous_step);
         Intent intent = getIntent();
-        Step step = intent.getBundleExtra("Step").getParcelable("Step");
-        mDescriptionText.setText(step.getDescription());
 
-        Uri mediaUri = Uri.parse(step.getVideoURL());
+        if(savedInstanceState == null){
+            recipe =  intent.getBundleExtra("Receita").getParcelable("Receita");
+            stepList = recipe.getSteps();
+            position = intent.getBundleExtra("Receita").getInt("Position");
+        }else{
+            recipe = savedInstanceState.getParcelable("Receita");
+            stepList = recipe.getSteps();
+            position = savedInstanceState.getInt("Position");
+        }
+        updateStep();
 
-        initializePlayer(mediaUri);
         //pegar url
         //fazer if para testar se tem video
+    }
+    public void updateStep(){
 
-
+        if(position == 0) mPreviousStepButton.setVisibility(View.INVISIBLE);
+        else if(position >= stepList.size()-1) mNextStepButton.setVisibility(View.INVISIBLE);
+        else{
+            mPreviousStepButton.setVisibility(View.VISIBLE);
+            mNextStepButton.setVisibility(View.VISIBLE);
+        }
+        step = stepList.get(position);
+        mDescriptionText.setText(step.getDescription());
+        Uri mediaUri = Uri.parse(step.getVideoURL());
+        initializePlayer(mediaUri);
 
     }
 
@@ -86,6 +115,25 @@ public class StepDetailActivity extends AppCompatActivity{
         mExoPlayer = null;
     }
 
+    @Override
+    protected void onDestroy() {
+        releasePlayer();
+        super.onDestroy();
+    }
+    public void nextStepListener(View view){
+        position ++;
+        updateStep();
+    }
 
+    public void previousStepListener(View view){
+        position--;
+        updateStep();
+    }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("Receita", recipe);
+        outState.putInt("Position", position);
+    }
 }

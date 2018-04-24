@@ -26,7 +26,6 @@ public class DetailsActivity extends AppCompatActivity implements StepsAdapter.S
     private Recipe recipe;
     private TextView tv_description;
     private RecyclerView mRecyclerView;
-    private List<Recipe> recipeList;
     private LinearLayoutManager layoutManager;
     private StepsAdapter mStepsAdapter;
 
@@ -60,11 +59,12 @@ public class DetailsActivity extends AppCompatActivity implements StepsAdapter.S
 
 
     @Override
-    public void onClick(Step step) {
+    public void onClick(int position) {
         Bundle b = new Bundle();
-        b.putParcelable("Step", step);
+        b.putParcelable("Receita", recipe);
+        b.putInt("Position", position);
         Intent intent = new Intent(this, StepDetailActivity.class);
-        intent.putExtra("Step", b);
+        intent.putExtra("Receita", b);
         startActivity(intent);
     }
 }
