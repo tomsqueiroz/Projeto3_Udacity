@@ -99,12 +99,13 @@ public class StepDetailActivity extends AppCompatActivity{
         step = stepList.get(position);
         mDescriptionText.setText(step.getDescription());
         Uri mediaUri = Uri.parse(step.getVideoURL());
+        if(mExoPlayer != null) releasePlayer();
         initializePlayer(mediaUri);
 
     }
 
     private void initializePlayer(Uri mediaUri){
-        if(mExoPlayer == null){
+        //if(mExoPlayer == null){
             TrackSelector trackSelector = new DefaultTrackSelector();
             LoadControl loadControl = new DefaultLoadControl();
             mExoPlayer = ExoPlayerFactory.newSimpleInstance(this, trackSelector, loadControl);
@@ -114,7 +115,7 @@ public class StepDetailActivity extends AppCompatActivity{
                     this, userAgent), new DefaultExtractorsFactory(), null, null);
             mExoPlayer.prepare(mediaSource);
             mExoPlayer.setPlayWhenReady(true);
-        }
+       // }
     }
 
     private void releasePlayer() {
