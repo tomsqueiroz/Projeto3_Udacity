@@ -2,6 +2,7 @@ package com.example.tom.projeto3_udacity.Activities;
 
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -9,7 +10,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -65,6 +69,10 @@ public class StepDetailActivity extends AppCompatActivity{
         mNextStepButton =  findViewById(R.id.next_step);
         mPreviousStepButton = findViewById(R.id.previous_step);
         Intent intent = getIntent();
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getSupportActionBar().hide();
+        }
 
         if(savedInstanceState == null){
             recipe =  intent.getBundleExtra("Receita").getParcelable("Receita");
