@@ -1,5 +1,6 @@
 package com.example.tom.projeto3_udacity.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.tom.projeto3_udacity.Activities.StepDetailActivity;
 import com.example.tom.projeto3_udacity.Adapters.StepsAdapter;
 import com.example.tom.projeto3_udacity.Model.Ingredient;
 import com.example.tom.projeto3_udacity.Model.Recipe;
@@ -29,12 +29,12 @@ public class MasterListFragment extends Fragment implements StepsAdapter.StepsAd
     private LinearLayoutManager layoutManager;
     private StepsAdapter mStepsAdapter;
     private View rootView;
+    private OnStepSelectedListener mSelectedStepListener;
 
 
     public MasterListFragment(){
 
     }
-
 
     @Nullable
     @Override
@@ -64,15 +64,25 @@ public class MasterListFragment extends Fragment implements StepsAdapter.StepsAd
         }
     }
 
-
     @Override
     public void onClick(int position) {
-        Bundle b = new Bundle();
-        b.putParcelable("Receita", recipe);
-        b.putInt("Position", position);
-        Intent intent = new Intent(rootView.getContext(), StepDetailActivity.class);
-        intent.putExtra("Receita", b);
-        startActivity(intent);
+
+        mSelectedStepListener.onStepSelected(position);
+
+    }
+    public interface OnStepSelectedListener{
+        void onStepSelected(int position);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try{
+            mSelectedStepListener = (OnStepSelectedListener) context;
+        } catch (ClassCastException e){
+            throw new ClassCastException(context.toString() + "interface not implemented OnStepSelectedListener");
+        }
+
+    }
 }

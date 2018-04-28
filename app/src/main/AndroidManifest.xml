@@ -26,12 +26,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.tom.projeto3_udacity.Activities.MainActivity" />
         </activity>
-        <activity android:name=".Activities.StepDetailActivity"
-            android:launchMode="singleTop">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.tom.projeto3_udacity.Activities.MainActivity" />
-        </activity>
 
     </application>
 </manifest>
