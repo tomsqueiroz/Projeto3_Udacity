@@ -49,8 +49,6 @@ public class DetailsActivity extends AppCompatActivity implements MasterListFrag
             }
         }
     }
-
-
     @Override
     public void onStepSelected(int position) {
         this.position = position;
@@ -67,11 +65,9 @@ public class DetailsActivity extends AppCompatActivity implements MasterListFrag
             transaction.commit();
         }
     }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("Position", position);
     }
-
 }
